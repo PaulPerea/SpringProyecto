@@ -1,0 +1,16 @@
+INDEX VERSION 1.131+C:\spring5\eclipse\spring-boot-backend-apirest\.metadata\.plugins\org.eclipse.jdt.core
+985414451.index
+4289621415.index
+326769512.index
+2046484052.index
+542556298.index
+1548506565.index
+2551895352.index
+3350567030.index
+3610065014.index
+689289565.index
+838065684.index
+189701434.index
+1865797976.index
+3656654399.index
+2417047257.index
