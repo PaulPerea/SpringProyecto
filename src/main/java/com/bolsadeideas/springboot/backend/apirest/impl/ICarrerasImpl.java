@@ -22,16 +22,16 @@ public class ICarrerasImpl implements ICarrerasService {
 
     @Override
     public Carreras findById(Long id) {
-        return null;
+        return carrerasDao.findById(id).orElse(null);
     }
 
     @Override
     public Carreras save(Carreras carreras) {
-        return null;
+        return carrerasDao.save(carreras);
     }
 
     @Override
     public void delete(Long id) {
-
+        carrerasDao.deleteById(id);
     }
 }

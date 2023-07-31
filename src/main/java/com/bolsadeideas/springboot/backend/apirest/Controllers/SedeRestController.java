@@ -44,6 +44,28 @@ public class SedeRestController {
         }
         return new ResponseEntity<Sedes>(sedes, HttpStatus.OK);
     }
+    @PostMapping("/sedesSave")
+    public ResponseEntity<?> create(@Valid @RequestBody Sedes sedes, BindingResult result){
+        Sedes clienteNew = null;
+        Map<String, Object> response = new HashMap<>();
+        if (result.hasErrors()){
+            List<String> errors = result.getFieldErrors().stream().
+                    map(err ->  "El campo '" + err.getField() + "' " + err.getDefaultMessage())
+                    .collect(Collectors.toList());
+            response.put("errors",errors);
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST); //estado 400
+        }
+        try {
+            clienteNew = iSedesService.save(sedes);
+        }catch (DataAccessException e){
+            response.put("mensaje", "Error al realizar insert en la base de datos");
+            response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        response.put("mensaje", "La sede ha sido creado con éxito : ");
+        response.put("sede", clienteNew);
+        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+    }
     @PutMapping("/sedesActualizar/{id}")
     public ResponseEntity<?>create(@Valid @RequestBody Sedes sedes, BindingResult result, @PathVariable Long id){
         Sedes SedeActual = iSedesService.findById(id);
@@ -76,5 +98,18 @@ public class SedeRestController {
         response.put("mensaje", "La Sede ha sido actualizado con éxito");
         response.put("Sede", SedeUpdated);
         return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+    }
+    @DeleteMapping("/sedes/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id){
+        Map<String, Object> response = new HashMap<>();
+        try {
+            iSedesService.delete(id);
+        } catch (DataAccessException e){
+            response.put("mensaje", "Error al eliminar la sede en la base de datos");
+            response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        response.put("mensaje","La sede eliminado con exito");
+        return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
     }
 }
