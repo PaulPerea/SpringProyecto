@@ -63,10 +63,10 @@ public class SedeRestController {
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         response.put("mensaje", "La sede ha sido creado con éxito : ");
-        response.put("sede", clienteNew);
+        response.put("Sede", clienteNew);
         return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
     }
-    @PutMapping("/sedesActualizar/{id}")
+    @PutMapping("/sedeActualizar/{id}")
     public ResponseEntity<?>create(@Valid @RequestBody Sedes sedes, BindingResult result, @PathVariable Long id){
         Sedes SedeActual = iSedesService.findById(id);
         Sedes SedeUpdated = null;
