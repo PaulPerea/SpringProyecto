@@ -84,17 +84,4 @@ public class CarrerasRestController {
         }
         return null;
     }
-    @DeleteMapping("/carreras/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id){
-        Map<String, Object> response = new HashMap<>();
-        try {
-            iCarrerasService.delete(id);
-        } catch (DataAccessException e){
-            response.put("mensaje", "Error al eliminar la carrera en la base de datos");
-            response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
-            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-        response.put("mensaje","La carrera eliminado con exito");
-        return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
-    }
 }
